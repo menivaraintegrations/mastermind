@@ -141,25 +141,57 @@
     box-shadow: 0 0 0 3px white, inset 0 -3px 6px rgba(0,0,0,0.4);
   }
 
-  /* hint grid */
+  /* hint row — same orientation as the peg row */
   .hints {
-    display: grid;
-    grid-template-columns: repeat(2, var(--hint-size));
-    grid-template-rows: repeat(2, var(--hint-size));
-    gap: 3px;
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
     flex-shrink: 0;
+    align-items: center;
   }
 
   .hint-peg {
     width: var(--hint-size);
     height: var(--hint-size);
     border-radius: 50%;
-    background: #2a2a4a;
-    border: 1.5px solid rgba(255,255,255,0.1);
+    background: transparent;
+    border: 1.5px solid rgba(255,255,255,0.12);
+    flex-shrink: 0;
   }
 
-  .hint-peg.black { background: #222; border-color: rgba(255,255,255,0.4); }
-  .hint-peg.white { background: #f0f0f0; border-color: rgba(0,0,0,0.2); }
+  .hint-peg.black { background: #111; border-color: rgba(255,255,255,0.5); box-shadow: 0 1px 3px rgba(0,0,0,0.5); }
+  .hint-peg.white { background: #f0f0f0; border-color: rgba(0,0,0,0.15); box-shadow: 0 1px 3px rgba(0,0,0,0.3); }
+
+  /* ── Legend ── */
+  #legend {
+    width: 100%;
+    background: var(--surface);
+    border-radius: 10px;
+    padding: 10px 14px;
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
+
+  .legend-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .legend-dot.black { background: #111; border: 1.5px solid rgba(255,255,255,0.5); }
+  .legend-dot.white { background: #f0f0f0; border: 1.5px solid rgba(0,0,0,0.15); }
+  .legend-dot.empty { background: transparent; border: 1.5px solid rgba(255,255,255,0.15); }
 
   /* ── Color palette ── */
   #palette-section {
@@ -505,8 +537,11 @@
   @media (max-height: 500px) and (orientation: landscape) {
     :root {
       --peg-size: 36px;
-      --hint-size: 13px;
+      --hint-size: 12px;
     }
+
+    #legend { gap: 10px; padding: 6px 10px; }
+    .legend-item { font-size: 0.7rem; gap: 5px; }
 
     header { padding: 6px 12px 4px; }
     header h1 { font-size: 1.1rem; }
@@ -548,6 +583,21 @@
 
 <main>
   <div id="board"></div>
+
+  <div id="legend">
+    <div class="legend-item">
+      <div class="legend-dot black"></div>
+      <span>Right color, right place</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot white"></div>
+      <span>Right color, wrong place</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot empty"></div>
+      <span>Not in code</span>
+    </div>
+  </div>
 
   <div id="result-banner">
     <h2 id="result-title"></h2>
