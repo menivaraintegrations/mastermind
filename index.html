@@ -141,13 +141,13 @@
     box-shadow: 0 0 0 3px white, inset 0 -3px 6px rgba(0,0,0,0.4);
   }
 
-  /* hint row — same orientation as the peg row */
+  /* hint grid */
   .hints {
-    display: flex;
-    flex-direction: row;
-    gap: 5px;
+    display: grid;
+    grid-template-columns: repeat(2, var(--hint-size));
+    grid-template-rows: repeat(2, var(--hint-size));
+    gap: 3px;
     flex-shrink: 0;
-    align-items: center;
   }
 
   .hint-peg {
@@ -840,9 +840,10 @@
 
   function buildHintOrder(blacks, whites, total) {
     const arr = [];
-    for (let i = 0; i < blacks; i++) arr.push('black');
+    const empty = total - blacks - whites;
+    for (let i = 0; i < empty;  i++) arr.push('empty');
     for (let i = 0; i < whites; i++) arr.push('white');
-    while (arr.length < total) arr.push('empty');
+    for (let i = 0; i < blacks; i++) arr.push('black');
     return arr;
   }
 
